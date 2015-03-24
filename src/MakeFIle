@@ -1,0 +1,17 @@
+CC=g++
+
+CFLAGS=-lfl
+
+all: shape
+
+shape: parser lexer
+    $(CC) parser.cpp lexer.cpp SyntaxManager.cpp Writer.cpp main.cpp -o shape $(CFLAGS)
+
+parser: shape_parser.y
+    bison -d shape_parser.y
+
+lexer: shape_lexer.l
+    flex shape_lexer.l
+
+clean:
+    rm parser.cpp lexer.cpp parser.hpp lexer.hpp shape
